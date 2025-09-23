@@ -1,21 +1,45 @@
-class Restaurante:
-    def __format__ (self, formato):
-        if formato ==  "Menu":
-            return f"El Menu de hoy es {self.Menu}"
-        return str(self)    
-    def __init__(self, Menu, Mesa, Mesero, Precio, Cantidad):
-        self.Menu = Menu
-        self.Mesa = Mesa
-        self.Mesero = Mesero
-        self.Precio = Precio
-        self.Cantidad = Cantidad
-    def __str__ (self):
-        if self.Cantidad >0:
-            if self.Cantidad == 1:
-                return f"Seria {self.Cantidad} plato de {self.Menu} en la mesa {self.Mesa} atendido por {self.Mesero} y cuesta {self.Precio}"
-            else:
-                return f"Serian {self.Cantidad} platos de {self.Menu} en la mesa {self.Mesa} atendidos por {self.Mesero} y cuestan {self.Precio}"
-        else:
-            return "No hay platos disponibles"
-    def __repr__ (self):
-        return f"Comida = {self.Menu}, Precio = {self.Precio}"
+class SistemaCalificaciones:
+    def __init__(self, materia):
+        self.materia = materia
+        self.estudiantes = {}  # Diccionario: estudiante -> nota
+    
+    def agregar_nota(self, estudiante, nota):
+        self.estudiantes[estudiante] = nota
+    
+    def evaluar_estudiante(self, estudiante):
+        if estudiante in self.estudiantes:
+            nota = self.estudiantes[estudiante]
+            if nota < 3.0:
+                print(f"{estudiante}: {nota} - Reprobado")
+            if nota >= 3.0 and nota < 4.0:
+                print(f"{estudiante}: {nota} - Aprobado")
+            if nota >= 4.0 and nota < 4.5:
+                print(f"{estudiante}: {nota} - Bueno")
+            if nota >= 4.5:
+                print(f"{estudiante}: {nota} - Excelente")
+        if estudiante not in self.estudiantes:
+            print("Estudiante no encontrado")
+    
+    def reporte_general(self):
+        print(f"Reporte de {self.materia}:")
+        reprobados = 0
+        aprobados = 0
+        for estudiante, nota in self.estudiantes.items():
+            if nota < 3.0:
+                reprobados += 1
+                print(f"{estudiante}: {nota} - REPROBADO")
+            if nota >= 3.0:
+                aprobados += 1
+                print(f"{estudiante}: {nota} - APROBADO")
+        if reprobados > 0:
+            print(f"Total reprobados: {reprobados}")
+        if aprobados > 0:
+            print(f"Total aprobados: {aprobados}")
+
+# Uso
+sistema1 = SistemaCalificaciones("Matemáticas")
+sistema1.agregar_nota("Juan", 2.5)
+sistema1.agregar_nota("Ana", 4.2)
+sistema1.agregar_nota("Carlos", 4.8)
+sistema1.evaluar_estudiante("Ana")
+sistema1.reporte_general()
